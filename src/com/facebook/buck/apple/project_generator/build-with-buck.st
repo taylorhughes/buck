@@ -5,6 +5,10 @@ BUILD_WITH_BUCK_COMMAND=`python <path_to_build_with_buck_py> <repo_root> <path_t
 echo $BUILD_WITH_BUCK_COMMAND
 
 BUCK_BUNDLE_OUTPUT_PATH=`eval $BUILD_WITH_BUCK_COMMAND | awk 'NR>1 {print $2}'`
+if [[ -z "$BUCK_BUNDLE_OUTPUT_PATH" ]]; then
+    echo "Could not find bundle output!"
+    exit 1
+fi
 echo "Sanitized bundle path: $BUCK_BUNDLE_OUTPUT_PATH"
 
 rm -r <resolved_bundle_destination> 2> /dev/null || true
